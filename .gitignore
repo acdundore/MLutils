@@ -1,3 +1,6 @@
 # ignore all .pkl and .csv files in root folder
 /*.pkl
 /*.csv
+
+# ignore pycharm cache folder
+__pycache__/
