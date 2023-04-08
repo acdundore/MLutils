@@ -40,16 +40,16 @@ def balance_dataset(X, y, sample_quantity='undersample', shuffle=True):
         # concatenate the current label to the balanced label output
         final_y_data = pd.concat([final_y_data, pd.DataFrame([label] * sample_quantity)])
 
+    # shuffle the balanced data if required
+    if shuffle:
+        index_list = [i for i in range(final_X_data.shape[0])]
+        random.shuffle(index_list)
+        final_X_data = final_X_data.iloc[index_list]
+        final_y_data = final_y_data.iloc[index_list]
+
     # re-index the balanced data and rename variables
     X_balanced = final_X_data.reset_index(drop=True)
     y_balanced = final_y_data.reset_index(drop=True)
-
-    # shuffle the balanced data if required
-    if shuffle:
-        index_list = [i for i in range(X_balanced.shape[0])]
-        random.shuffle(index_list)
-        X_balanced = X_balanced.iloc[index_list]
-        y_balanced = y_balanced.iloc[index_list]
 
     return X_balanced, y_balanced
 
