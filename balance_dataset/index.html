@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>balance_dataset - MLutils</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "balance_dataset";
+        var mkdocs_page_input_path = "balance_dataset.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MLutils
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">MLutils API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">.preprocessing</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">balance_dataset</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MLutils</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>MLutils API &raquo;</li>
+          <li>.preprocessing &raquo;</li>
+      <li>balance_dataset</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="class-balancing">Class Balancing</h1>
+<p>This function is able to quickly balance an unbalanced dataset. Three methods of class balancing are supported:</p>
+<ul>
+<li><strong>Undersampling</strong>: all classes are truncated to have the same quantity of instances as the least numerous class</li>
+<li><strong>Oversampling</strong>: all classes have instances duplicated (with the least amount of repetition possible) until they have the same quantity of instances as the most numerous class</li>
+<li><strong>Arbitrary quantity sampling</strong>: given a desired number of instances, each class will either be oversampled or undersampled until they reach this quantity</li>
+</ul>
+<hr />
+<blockquote>
+<p><em>function</em> MLutils.preprocessing.<strong>balance_dataset</strong>(<em>X, y, sample_quantity='undersample', shuffle=True</em>)</p>
+</blockquote>
+<hr />
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X : <em>DataFrame</em></td>
+<td>Pandas DataFrame containing the dataset's features.</td>
+</tr>
+<tr>
+<td>y : <em>DataFrame</em></td>
+<td>Pandas DataFrame containing the dataset's labels.</td>
+</tr>
+<tr>
+<td>sample_quantity : <em>str, int</em></td>
+<td>Indicates the sampling method. <code>'undersample'</code> or <code>'oversample'</code><br/> can be passed. Alternatively, an integer can be passed to <br/> automatically oversample or undersample each individual <br/> class until the number of instances matches the integer.</td>
+</tr>
+<tr>
+<td>shuffle : <em>bool</em></td>
+<td>Boolean to indicate whether the balanced dataset should be <br/> shuffled or not.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="returns">Returns</h3>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X_balanced : <em>DataFrame</em></td>
+<td>Pandas DataFrame containing the balanced features.</td>
+</tr>
+<tr>
+<td>y_balanced : <em>DataFrame</em></td>
+<td>Pandas DataFrame containing the balanced labels.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="example">Example</h3>
+<pre><code class="language-python">from MLutils.preprocessing import balance_dataset
+import random
+import pandas as pd
+
+# create a unbalanced dummy dataset
+labels = ['yes'] * 2 + ['no'] * 4 + ['maybe'] * 6 # unbalanced labels
+feature_1 = [random.randrange(1, 50, 1) for f1 in range(len(labels))] # random features
+feature_2 = [random.randrange(1, 50, 1) for f2 in range(len(labels))]
+data = pd.DataFrame({'Feature 1': feature_1,
+                     'Feature 2': feature_2,
+                     'Labels': labels})
+
+# show the dataset
+print(data)
+</code></pre>
+<pre><code class="language-python">    Feature 1  Feature 2 Labels
+0          29          8    yes
+1          13         49    yes
+2          38         47     no
+3           8         13     no
+4          34         11     no
+5          38         35     no
+6          35         31  maybe
+7          31         48  maybe
+8          16         29  maybe
+9          28         17  maybe
+10         12         26  maybe
+11         39         46  maybe
+</code></pre>
+<pre><code class="language-python"># balance the dataset
+X_balanced, y_balanced = balance_dataset(data[['Feature 1', 'Feature 2']], 
+                                         data['Labels'], 
+                                         sample_quantity='undersample', 
+                                         shuffle=False)
+
+print(pd.concat([X_balanced, y_balanced], axis=1))
+</code></pre>
+<pre><code class="language-python">    Feature 1  Feature 2      0
+0          29          8    yes
+1          13         49    yes
+2          29          8    yes
+3          13         49    yes
+4          38         47     no
+5           8         13     no
+6          34         11     no
+7          38         35     no
+8          39         46  maybe
+9          31         48  maybe
+10         28         17  maybe
+11         16         29  maybe
+</code></pre>
+<hr />
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
