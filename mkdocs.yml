@@ -1,0 +1,12 @@
+site_name: MLutils
+nav:
+    - 'Home': index.md
+    - 'MLutils API':
+        - '.preprocessing':
+            - 'balance_dataset': balance_dataset.md
+theme: 
+    name: readthedocs
+    prev_next_buttons_location: None
+    navigation_depth: 3
+    collapse_navigation: True
+    titles_only: True

@@ -4,3 +4,6 @@
 
 # ignore pycharm cache folder
 __pycache__/
+
+# ignore github pages site directory
+site/
