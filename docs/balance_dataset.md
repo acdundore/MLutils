@@ -71,7 +71,7 @@ print(data)
 # balance the dataset
 X_balanced, y_balanced = balance_dataset(data[['Feature 1', 'Feature 2']], 
 										 data['Labels'], 
-										 sample_quantity='undersample', 
+										 sample_quantity=4, 
 										 shuffle=False)
 
 print(pd.concat([X_balanced, y_balanced], axis=1))

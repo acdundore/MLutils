@@ -4,8 +4,8 @@ import random
 
 def balance_dataset(X, y, sample_quantity='undersample', shuffle=True):
     # get the unique labels and their respective counts
-    unique_labels = list(y.unique())
-    label_counts = [(y == l).sum() for l in unique_labels]
+    unique_labels = list(y.iloc[:, 0].unique())
+    label_counts = [(y.iloc[:, 0] == l).sum() for l in unique_labels]
     label_count_dict = dict(zip(unique_labels, label_counts))
 
     # determing number of samples for each label if sampling method is passed
@@ -16,12 +16,13 @@ def balance_dataset(X, y, sample_quantity='undersample', shuffle=True):
 
     # create blank dataframes that will be used to store balanced data
     final_X_data = pd.DataFrame({})
-    final_y_data = pd.DataFrame({})
+    final_y_data = y[0:0]
+    label_column_name = list(final_y_data.columns)[0]
 
     # begin sampling for each label
     for label, count in label_count_dict.items():
         # get current subset of X data
-        X_current = X[y == label]
+        X_current = X[y.iloc[:, 0] == label]
         X_current.reset_index(inplace=True, drop=True)
 
         # concatenate repeats of the data if necessary for oversampling
@@ -38,7 +39,7 @@ def balance_dataset(X, y, sample_quantity='undersample', shuffle=True):
             final_X_data = pd.concat([final_X_data, sampled_X_data])
 
         # concatenate the current label to the balanced label output
-        final_y_data = pd.concat([final_y_data, pd.DataFrame([label] * sample_quantity)])
+        final_y_data = pd.concat([final_y_data, pd.DataFrame({label_column_name: [label] * sample_quantity})], axis=0)
 
     # shuffle the balanced data if required
     if shuffle:
